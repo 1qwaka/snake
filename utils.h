@@ -1,0 +1,1 @@
+int get_term_size(int *width, int *height);
