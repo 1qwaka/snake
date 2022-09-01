@@ -1,7 +1,8 @@
 #include <sys/ioctl.h>
 #include "err_codes.h"
+#include "utils.h"
 
-int get_term_size(int *width, int *height)
+err_code_t get_term_size(int *width, int *height)
 {
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
@@ -9,5 +10,7 @@ int get_term_size(int *width, int *height)
     *width = w.ws_col;
     *height = w.ws_row;
     
-    return OK;
+    return EC_OK;
 }
+
+void make_stdin_nonblock();
