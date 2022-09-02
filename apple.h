@@ -3,7 +3,7 @@
 
 
 #include "utils.h"
-#include "err_codes.h"
+#include "err_code.h"
 #include "field.h"
 #include "snake.h"
 
