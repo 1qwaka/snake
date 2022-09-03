@@ -15,6 +15,8 @@ typedef struct
 // apple_t *new_apple(x, y);
 // void delete_apple(apple_t *apple);
 
+void draw_apple(apple_t* apple, field_t* field);
+
 err_code_t spawn_new_apple(field_t* field, snake_t* snake);
 
 #endif

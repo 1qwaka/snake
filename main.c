@@ -22,24 +22,51 @@
 
 // TODO: add colors support
 
-#define FPS 2
-#define MICROSEC_SLEEP_INTERVAL 1000000 / FPS
+#define FPS 5
+#define MICROSEC_FRAME_TIME 1000000 / FPS
 
 unsigned long long frame = 0;
-game_state_t game_state;
+game_state_t game_state = { 0 };
+
 
 err_code_t init_game()
 {
+    // creating game field
     int width, height;
     get_term_size(&width, &height);
     game_state.field = new_field(width, height);
     reset_field(game_state.field);
+
+    // creating snake
+    game_state.snake = new_snake(5);
+    game_state.snake->head_x = width / 2;
+    game_state.snake->head_y = height / 2;
 
     return EC_OK;
 }
 
 err_code_t update_game()
 {
+    // reset game field
+    reset_field(game_state.field);
+
+    // input handlers
+    handle_input(&game_state);
+
+
+    // update game objects
+    game_state.snake->head_x += game_state.snake->direction.x;
+    game_state.snake->head_y += game_state.snake->direction.y;
+
+
+    // draw snake on field
+    draw_snake(game_state.snake, game_state.field);
+    // draw apple on field
+    // draw_apple(game_state.apple, game_state.field);
+    // draw status panel 
+    // ..
+
+    // final draw field in console 
     draw_field(game_state.field);
 
     return EC_OK;
@@ -48,19 +75,19 @@ err_code_t update_game()
 err_code_t mainloop()
 {
     err_code_t exit_code = EC_OK;
-    struct timeval start, end;
+    struct timeval frame_start, frame_end;
     unsigned frame_time;
 
-    while (exit_code == EC_OK){
-
-        gettimeofday(&start, NULL);
+    while (exit_code == EC_OK)
+    {
+        gettimeofday(&frame_start, NULL);
         exit_code = update_game();
-        gettimeofday(&end, NULL);
+        gettimeofday(&frame_end, NULL);
 
-        frame_time = microsec_elapsed(&start, &end);
-        if (frame_time < MICROSEC_SLEEP_INTERVAL)
-            usleep(MICROSEC_SLEEP_INTERVAL - frame_time);
-        // printf("sleep for %d\n", MICROSEC_SLEEP_INTERVAL - frame_time);
+        frame_time = microsec_elapsed(&frame_start, &frame_end);
+        if (frame_time < MICROSEC_FRAME_TIME)
+            usleep(MICROSEC_FRAME_TIME - frame_time);
+
         frame++;
     }
 
@@ -69,10 +96,13 @@ err_code_t mainloop()
 
 int main(void)
 {
-    // system("stty -echo");
+    system("stty -icanon -echo");
+    make_stdin_nonblock();
+
     err_code_t exit_code = EC_OK;
     exit_code = init_game();
     if (exit_code == EC_OK)
         exit_code = mainloop();
+
     return exit_code;
 }

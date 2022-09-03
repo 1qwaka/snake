@@ -4,9 +4,12 @@
 #include <stdlib.h>
 
 #define FIELD_BORDER_SIZE   1
-#define STATUS_PANEL_HEIGHT 1
+#define STATUS_PANEL_HEIGHT 2
 
-#define _idx(width, i, j) ((i) * (width) + (j))
+#define _IDX(width, i, j) ((i) * (width) + (j))
+// macro to work with one dimensional array like with two dimensional array
+#define GET_CELL(array, width, i, j) ((array)[_IDX(width, i, j)])
+
 
 typedef struct 
 {
@@ -22,8 +25,8 @@ typedef struct
 enum field_cell_types
 {
     CT_EMPTY = ' ',
-    CT_SIDE = '#',
-    CT_UPSIDE = '#',
+    CT_SIDE = '|',
+    CT_UPSIDE = '-',
 };
 
 field_t *new_field(int width, int height);

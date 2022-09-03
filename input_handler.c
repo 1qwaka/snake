@@ -1,19 +1,20 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "input_handler.h"
 #include "snake.h"
 
 void handle_input(game_state_t *state)
 {
     char buf[256] = { 0 };
-    fgets(buf, sizeof(buf), stdin);
+    read(STDIN_FILENO, buf, sizeof(buf));
 
-    if (strlen(buf) < 2)
+    if (strlen(buf) < 1)
         return;
     
-    char command = buf[strlen(buf) - 2];
+    char command = buf[strlen(buf) - 1];
     snake_t *snake = state->snake;
-
+    
     switch (command)
     {
     case ak_up:

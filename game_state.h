@@ -7,9 +7,9 @@
 
 typedef enum game_status 
 {
+    GS_MENU,
     GS_RUNNING,
     GS_PAUSE,
-    GS_MENU
 } game_status_t;
 
 typedef struct 
@@ -20,5 +20,7 @@ typedef struct
     game_status_t status;
     int score;
 } game_state_t;
+
+// TODO: new and delete functions
 
 #endif

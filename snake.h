@@ -12,6 +12,7 @@ typedef struct
     point_t *body;
     size_t length, max_length;
     point_t direction;
+    point_t tail_prev_pos;
 } snake_t;
 
 snake_t* new_snake(size_t max_length);
