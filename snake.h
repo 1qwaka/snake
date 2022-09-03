@@ -21,4 +21,8 @@ void delete_snake(snake_t *snake);
 
 err_code_t draw_snake(snake_t *snake, field_t *field);
 
+void update_snake(snake_t *snake);
+
+void grow_snake(snake_t *snake);
+
 #endif
