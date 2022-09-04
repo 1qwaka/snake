@@ -35,6 +35,44 @@ void check_game_over(game_state_t *state)
     field_t *f = state->field;
     int border = FIELD_BORDER_SIZE;
 
-    state->is_game_over = s->head_x <= border - 1 || s->head_x >= (int)f->game_width - border ||
-                          s->head_y <= border - 1 || s->head_y >= (int)f->game_height - border;
+    for (size_t i = 0; i < s->length; i++)
+    {
+        if (s->head_x == s->body[i].x && 
+            s->head_y == s->body[i].y)
+        {
+            state->is_game_over = true;
+            break;
+        }
+    }
+    if (!state->is_game_over)
+    {
+        state->is_game_over = 
+                        s->head_x <= border - 1 || 
+                        s->head_x >= (int)f->game_width - border ||
+                        s->head_y <= border - 1 || 
+                        s->head_y >= (int)f->game_height - border;
+    }
+
+}
+
+void draw_game_over(game_state_t *state)
+{
+    field_t *field = state->field;
+
+    for (size_t i = 0; i < field->width * field->height; i++)
+        field->field[i] = ' ';
+    
+    size_t center_x = field->width / 2;
+    size_t center_y = field->height / 2;
+    char *text_pos = &GET_CELL(field->field, field->width, center_y, center_x - 5);
+
+    snprintf(text_pos, center_x, "%s", "GAME OVER");
+    // snprintf после текста вставляет \0
+    for (size_t i = 0; i < center_x + 1; i++)
+        if (text_pos[i] == 0)
+        {
+            text_pos[i] = ' ';
+            break;
+        }
+    
 }

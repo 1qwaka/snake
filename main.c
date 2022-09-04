@@ -71,7 +71,11 @@ err_code_t update_game()
     check_game_over(&game_state);
     
     if (game_state.is_game_over)
+    {
+        draw_game_over(&game_state);
+        draw_field(game_state.field);
         return EC_GAME_OVER;
+    }
 
     // draw snake on field
     draw_snake(game_state.snake, game_state.field);
