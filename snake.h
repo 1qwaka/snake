@@ -15,6 +15,12 @@ typedef struct
     point_t tail_prev_pos;
 } snake_t;
 
+enum SNAKE_CELL_TYPE
+{
+    SCT_HEAD = 'O',
+    SCT_BODY = 'o'
+};
+
 snake_t* new_snake(size_t max_length);
 
 void delete_snake(snake_t *snake);

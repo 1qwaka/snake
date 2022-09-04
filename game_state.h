@@ -1,6 +1,8 @@
 #ifndef _GAME_STATE_H_
 #define _GAME_STATE_H_
 
+#include <stdbool.h>
+#include "game_types.h"
 #include "snake.h"
 #include "field.h"
 #include "apple.h"
@@ -12,14 +14,15 @@ typedef enum game_status
     GS_PAUSE,
 } game_status_t;
 
-typedef struct 
+struct game_state
 {
     snake_t *snake;
     field_t *field;
     apple_t *apple;
     game_status_t status;
-    int score;
-} game_state_t;
+    unsigned score;
+    bool is_game_over;
+};
 
 // TODO: new and delete functions
 

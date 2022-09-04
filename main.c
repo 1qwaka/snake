@@ -13,6 +13,7 @@
 #include "field.h"
 #include "snake.h"
 #include "game_state.h"
+#include "game_actions.h"
 
 // TODO: handle terminal resize event
 // #include <signal.h>
@@ -38,12 +39,13 @@ err_code_t init_game()
     reset_field(game_state.field);
 
     // creating snake
-    game_state.snake = new_snake(5);
-    game_state.snake->head_x = 15; //width / 2;
-    game_state.snake->head_y = 10; //height / 2;
+    game_state.snake = new_snake(width * height);
+    game_state.snake->head_x = width / 2;
+    game_state.snake->head_y = height / 2;
 
     // creatng apple
-    game_state.apple = new_apple(10, 10);
+    game_state.apple = new_apple(width / 2 + 1, height / 2 + 1);
+    
 
     return EC_OK;
 }
@@ -53,33 +55,34 @@ err_code_t update_game()
     // reset game field
     reset_field(game_state.field);
 
+
     // input handlers
     handle_input(&game_state);
 
 
     // update game objects
     update_snake(game_state.snake);
-    update_apple(game_state.apple, game_state.field);
+    update_apple(&game_state);
 
-    printf("apple x:%d  y:%d\n", game_state.apple->x, game_state.apple->y);
-    printf("snake x:%d  y:%d\n", game_state.snake->head_x, game_state.snake->head_y);
-    if (game_state.apple->x == game_state.snake->head_x && 
-        game_state.apple->y == game_state.snake->head_y)
-        {
-            grow_snake(game_state.snake);
-            game_state.apple->x = -1;
-        }
+
+    // other game events
+    try_eat_apple(&game_state);
+
+    check_game_over(&game_state);
     
+    if (game_state.is_game_over)
+        return EC_GAME_OVER;
 
     // draw snake on field
     draw_snake(game_state.snake, game_state.field);
     // draw apple on field
     draw_apple(game_state.apple, game_state.field);
     // draw status panel 
-    // ..
+    draw_score(&game_state);
 
     // final draw field in console 
     draw_field(game_state.field);
+    
 
     return EC_OK;
 }

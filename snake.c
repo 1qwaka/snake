@@ -18,11 +18,11 @@ void delete_snake(snake_t *snake);
 
 err_code_t draw_snake(snake_t *snake, field_t *field)
 {
-    GET_CELL(field->game_panel, field->game_width, snake->head_y, snake->head_x) = 'S';
+    GET_CELL(field->game_panel, field->game_width, snake->head_y, snake->head_x) = SCT_HEAD;
 
     for (size_t i = 0; i < snake->length; i++)
     {
-        GET_CELL(field->game_panel, field->game_width, snake->body[i].y, snake->body[i].x) = 's';
+        GET_CELL(field->game_panel, field->game_width, snake->body[i].y, snake->body[i].x) = SCT_BODY;
     }
 
     return EC_OK;

@@ -11,7 +11,7 @@
 #define GET_CELL(array, width, i, j) ((array)[_IDX(width, i, j)])
 
 
-typedef struct 
+typedef struct field
 {
     size_t game_width, game_height;
     size_t panel_width, panel_height;
@@ -24,9 +24,9 @@ typedef struct
 
 enum field_cell_types
 {
-    CT_EMPTY = ' ',
-    CT_SIDE = '|',
-    CT_UPSIDE = '-',
+    FCT_EMPTY = ' ',
+    FCT_SIDE = '|',
+    FCT_UPSIDE = '-',
 };
 
 field_t *new_field(int width, int height);
