@@ -2,6 +2,8 @@
 #define _FIELD_H_
 
 #include <stdlib.h>
+#include <wchar.h>
+#include "game_types.h"
 
 #define FIELD_BORDER_SIZE   1
 #define STATUS_PANEL_HEIGHT 2
@@ -11,7 +13,7 @@
 #define GET_CELL(array, width, i, j) ((array)[_IDX(width, i, j)])
 
 
-typedef struct field
+struct field
 {
     size_t game_width, game_height;
     size_t panel_width, panel_height;
@@ -20,7 +22,7 @@ typedef struct field
     char *stats_panel;
     char *field;
     size_t border_size;
-} field_t;
+};
 
 enum field_cell_types
 {

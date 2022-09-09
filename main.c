@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/time.h>
+#include <time.h>
 
 #include "utils.h"
 #include "err_code.h"
@@ -32,6 +33,8 @@ game_state_t game_state = { 0 };
 
 err_code_t init_game()
 {
+    srand48(time(NULL));
+
     // creating game field
     int width, height;
     get_term_size(&width, &height);
@@ -48,6 +51,13 @@ err_code_t init_game()
     
 
     return EC_OK;
+}
+
+void finish_game()
+{
+    delete_apple(game_state.apple);
+    delete_snake(game_state.snake);
+    delete_field(game_state.field);
 }
 
 err_code_t update_game()
@@ -122,6 +132,7 @@ int main(void)
     exit_code = init_game();
     if (exit_code == EC_OK)
         exit_code = mainloop();
+    finish_game();
 
     return exit_code;
 }

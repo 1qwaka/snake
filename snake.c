@@ -14,7 +14,11 @@ snake_t* new_snake(size_t max_length)
     return snake;
 }
 
-void delete_snake(snake_t *snake);
+void delete_snake(snake_t *snake)
+{
+    free(snake->body);
+    free(snake);
+}
 
 err_code_t draw_snake(snake_t *snake, field_t *field)
 {

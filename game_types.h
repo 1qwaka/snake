@@ -5,4 +5,6 @@ typedef struct apple apple_t;
 
 typedef struct game_state game_state_t;
 
+typedef struct field field_t;
+
 #endif

@@ -23,17 +23,21 @@ field_t *new_field(int width, int height)
     return field;
 }
 
-void delete_field(field_t *field);
+void delete_field(field_t *field)
+{
+    free(field->field);
+    free(field);
+}
 
 void draw_field(field_t *field)
 {
-    printf("\n");
+    // printf("\n");
     // drawing inverse to make coords start from bottom left and Y go upward
     for (int i = (int)field->height - 1; i > -1; i--)
     {
         for (int j = 0; j < (int)field->width; j++)
             // printf("%c", field->field[_idx(field->width, i, j)]);
-            printf("%c", GET_CELL(field->field, field->width, i, j));
+            printf("%lc", GET_CELL(field->field, field->width, i, j));
         // to make mouse be on the last line of field, not the line after
         if (i != 0)
             printf("\n");

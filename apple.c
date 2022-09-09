@@ -11,6 +11,11 @@ apple_t *new_apple(int x, int y)
     return apple;
 }
 
+void *del_apple(apple_t *apple)
+{
+    free(apple);
+}
+
 void draw_apple(apple_t* apple, field_t* field)
 {
     if (apple->x < 0 || apple->y < 0)
