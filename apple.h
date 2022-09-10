@@ -15,12 +15,10 @@ struct apple
 
 enum apple_cell_types
 {
-    ACT_APPLE = '@'
+    ACT_APPLE = L'@'
 };
 
 apple_t *new_apple(int x, int y);
-
-void *del_apple(apple_t *apple);
 
 void delete_apple(apple_t *apple);
 
@@ -28,6 +26,6 @@ void update_apple(game_state_t *state);
 
 void draw_apple(apple_t* apple, field_t* field);
 
-err_code_t set_random_apple_pos(game_state_t *state);
+err_code_t set_random_apple_pos(apple_t *apple, int min_x, int max_x, int min_y, int max_y);
 
 #endif

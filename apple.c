@@ -11,7 +11,7 @@ apple_t *new_apple(int x, int y)
     return apple;
 }
 
-void *del_apple(apple_t *apple)
+void delete_apple(apple_t *apple)
 {
     free(apple);
 }
@@ -27,18 +27,16 @@ void update_apple(game_state_t *state)
 {
     if (state->apple->x < 0 || state->apple->y < 0)
     {
-        set_random_apple_pos(state);
+        field_t *f = state->field;
+        size_t b = f->border_size;
+        set_random_apple_pos(state->apple, b, f->game_width - b, b, f->game_height - b);
     }
 }
 
-err_code_t set_random_apple_pos(game_state_t *state)
+err_code_t set_random_apple_pos(apple_t *apple, int min_x, int max_x, int min_y, int max_y)
 {
-    int border = FIELD_BORDER_SIZE;
-    field_t *field = state->field;
-    apple_t *apple = state->apple;
-    
-    apple->x = (int)(drand48() * (field->game_width - border * 2) + border);
-    apple->y = (int)(drand48() * (field->game_height - border * 2) + border);
+    apple->x = (int)(drand48() * (max_x - min_x) + min_x);
+    apple->y = (int)(drand48() * (max_y - min_y) + min_y);
     
     return EC_OK;
 }

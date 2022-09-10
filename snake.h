@@ -17,10 +17,17 @@ typedef struct
 
 enum SNAKE_CELL_TYPE
 {
-    SCT_HEAD = 'O',
-    SCT_BODY = 'o'
+    SCT_HEAD = L'O',
+    SCT_BODY = L'o'
 };
 
+/**
+ * @brief creates new snake object and return pointer on it
+ * 
+ * @param max_length maximum length of snake array of characters 
+ * of this size will be allocate
+ * @return snake_t* new snake object
+ */
 snake_t* new_snake(size_t max_length);
 
 void delete_snake(snake_t *snake);

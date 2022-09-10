@@ -18,17 +18,17 @@ struct field
     size_t game_width, game_height;
     size_t panel_width, panel_height;
     size_t width, height;
-    char *game_panel;
-    char *stats_panel;
-    char *field;
+    wchar_t *game_panel;
+    wchar_t *stats_panel;
+    wchar_t *field;
     size_t border_size;
 };
 
 enum field_cell_types
 {
     FCT_EMPTY = ' ',
-    FCT_SIDE = '|',
-    FCT_UPSIDE = '-',
+    FCT_SIDE = L'#',
+    FCT_UPSIDE = L'#',
 };
 
 field_t *new_field(int width, int height);

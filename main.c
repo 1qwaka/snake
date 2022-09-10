@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
+#include <locale.h>
 
 #include "utils.h"
 #include "err_code.h"
@@ -18,9 +19,6 @@
 
 // TODO: handle terminal resize event
 // #include <signal.h>
-
-// TODO: change char to wchar
-// #include <wchar.h>
 
 // TODO: add colors support
 
@@ -126,6 +124,7 @@ err_code_t mainloop()
 int main(void)
 {
     system("stty -icanon -echo");
+    setlocale(LC_ALL, "");
     make_stdin_nonblock();
 
     err_code_t exit_code = EC_OK;

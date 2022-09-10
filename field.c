@@ -4,11 +4,12 @@
 
 field_t *new_field(int width, int height)
 {
-    field_t *field = malloc(sizeof(field_t));
+    field_t *field;
+    field = malloc(sizeof(*field));
 
     field->width = width;
     field->height = height;
-    field->field = malloc(width * height);
+    field->field = malloc(width * height * sizeof(*field->field));
 
     field->panel_width = width;
     field->panel_height = STATUS_PANEL_HEIGHT;
@@ -41,8 +42,8 @@ void draw_field(field_t *field)
         // to make mouse be on the last line of field, not the line after
         if (i != 0)
             printf("\n");
-        fflush(stdout);
     }
+    fflush(stdout);
 }
 
 void set_empty_field(field_t *field)
@@ -59,7 +60,7 @@ void reset_field(field_t *field)
 
 void set_game_panel_borders(field_t *field)
 {
-    char *gp = field->game_panel;
+    wchar_t *gp = field->game_panel;
     size_t gp_width = field->game_width;
     size_t gp_height = field->game_height;
 

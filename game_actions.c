@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <wchar.h>
 #include "game_actions.h"
 
 bool apple_can_be_eaten(game_state_t *state)
@@ -20,7 +21,7 @@ void try_eat_apple(game_state_t *state)
 void draw_score(game_state_t *state)
 {
     field_t *field = state->field;
-    snprintf(field->stats_panel, field->panel_width, "score: %u", state->score);
+    swprintf(field->stats_panel, field->panel_width, L"score: %u", state->score);
     for (size_t i = 0; i < field->panel_width; i++)
         if (field->stats_panel[i] == 0)
         {
@@ -64,9 +65,9 @@ void draw_game_over(game_state_t *state)
     
     size_t center_x = field->width / 2;
     size_t center_y = field->height / 2;
-    char *text_pos = &GET_CELL(field->field, field->width, center_y, center_x - 5);
+    wchar_t *text_pos = &GET_CELL(field->field, field->width, center_y, center_x - 5);
 
-    snprintf(text_pos, center_x, "%s", "GAME OVER");
+    swprintf(text_pos, center_x, L"%s", "GAME OVER");
     // snprintf после текста вставляет \0
     for (size_t i = 0; i < center_x + 1; i++)
         if (text_pos[i] == 0)

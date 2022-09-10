@@ -1,6 +1,7 @@
 #include "snake.h"
 #include <stdio.h>
 
+
 snake_t* new_snake(size_t max_length)
 {
     snake_t *snake = malloc(sizeof(snake_t));
